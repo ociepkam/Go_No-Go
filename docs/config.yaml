@@ -1,0 +1,43 @@
+Observer: Patrycja
+
+# EEG
+Ophthalmic_procedure: True
+Send_EEG_trigg: False
+
+# view parameters
+Screen_color: Gainsboro
+Text_size: 40
+
+# times
+Fixation_show_time: 0.5
+Cue_show_time: [1, 2]
+Target_show_time: 1
+Empty_screen_show_time: 1
+Feedback_show_time: 1
+
+# show feedback
+Feedback_go_show_positives: True
+Feedback_go_show_negatives: True
+Feedback_shape_show_positives: True
+Feedback_shape_show_negatives: True
+Feedback_color_show_positives: True
+Feedback_color_show_negatives: True
+
+# reaction key
+Key: space
+
+# experiment structure
+Experiment_blocks: [
+    {type: treining, number_of_go_trials: 5, number_of_shape_trials: 5, number_of_color_trials: 5},
+    {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
+    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
+    {type: break},
+    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
+    {type: break},
+    {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
+    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
+    {type: break},
+    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.2}]
+
+
+
