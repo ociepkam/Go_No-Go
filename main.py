@@ -8,7 +8,7 @@ from classes.load_data import load_data, load_config, load_data_in_folders
 from classes.screen import create_win
 from classes.experiment_info import experiment_info
 from classes.ophthalmic_procedure import ophthalmic_procedure
-# from classes.show import show
+from classes.show import show
 from classes.save_data import save_beh, save_triggers
 from classes.triggers import create_eeg_port, create_nirs_dev
 from classes.show_info import show_info, prepare_buttons_info
@@ -54,10 +54,10 @@ def run():
         show_info(win=win, file_name=os.path.join('messages', instruction), text_size=config['Text_size'],
                   screen_width=screen_res['width'])
 
-    # Training
-
     # Experiment
-    beh = []
+    beh, triggers_list = show(win=win, screen_res=screen_res, experiment=experiment, config=config, part_id=part_id,
+                              port_eeg=port_eeg, trigger_no=trigger_no, triggers_list=triggers_list,
+                              frame_time=1./frames_per_sec)
 
     # Save data
     save_beh(data=beh, name=part_id)

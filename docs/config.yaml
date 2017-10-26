@@ -9,11 +9,11 @@ Screen_color: Gainsboro
 Text_size: 40
 
 # times
-Fixation_show_time: 0.5
+Fixation_show_time: [0.5, 0.5]
 Cue_show_time: [1, 2]
-Target_show_time: 1
-Empty_screen_show_time: 1
-Feedback_show_time: 1
+Target_show_time: [1, 1]
+Empty_screen_show_time: [1, 1]
+Feedback_show_time: [1, 1]
 
 # show feedback
 Feedback_go_show_positives: True
@@ -23,8 +23,8 @@ Feedback_shape_show_negatives: True
 Feedback_color_show_positives: True
 Feedback_color_show_negatives: True
 
-# reaction key
-Key: space
+# reaction keys
+Keys: [space]
 
 # experiment structure
 Experiment_blocks: [
