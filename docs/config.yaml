@@ -1,7 +1,7 @@
 Observer: Patrycja
 
 # EEG
-Ophthalmic_procedure: True
+Ophthalmic_procedure: False
 Send_EEG_trigg: False
 
 # view parameters
@@ -28,15 +28,15 @@ Key: space
 
 # experiment structure
 Experiment_blocks: [
-    {type: treining, number_of_go_trials: 5, number_of_shape_trials: 5, number_of_color_trials: 5},
+    {type: training, number_of_go_trials: 5, number_of_shape_trials: 5, number_of_color_trials: 5},
     {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
-    {type: break},
+    {type: break, file_name: break1.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
-    {type: break},
+    {type: break, file_name: break2.txt},
     {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
-    {type: break},
+    {type: break, file_name: break3.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.2}]
 
 

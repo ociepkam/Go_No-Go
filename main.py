@@ -12,6 +12,7 @@ from classes.ophthalmic_procedure import ophthalmic_procedure
 from classes.save_data import save_beh, save_triggers
 from classes.triggers import create_eeg_port, create_nirs_dev
 from classes.show_info import show_info, prepare_buttons_info
+from classes.prepare_experiment import prepare_experiment
 
 __author__ = 'ociepkam'
 
@@ -35,6 +36,9 @@ def run():
 
     # load stimulus
     stimulus = load_data(win=win, folder_name="stimulus", config=config, screen_res=screen_res)
+
+    # prepare experiment
+    experiment = prepare_experiment(config['Experiment_blocks'], stimulus)
 
     # Run experiment
     # Ophthalmic procedure

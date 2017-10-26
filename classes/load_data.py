@@ -40,13 +40,12 @@ def load_data(win, folder_name, config, screen_res):
                         word = visual.TextStim(win=win, antialias=True, font=u'Arial', text=text,
                                                height=config['Text_size'], wrapWidth=screen_res['width'],
                                                color=u'black', alignHoriz='center', alignVert='center')
-                        data.append(('text', trigger_name, word))
+                        data.append({'type': 'text', 'name': trigger_name, 'stimulus': word})
             elif name[-3:] in possible_images_format:
-                # image = visual.ImageStim(win, image=path, interpolate=True)
-                # data.append(('image', name.split('.')[0], image))
-                data.append(path)
+                image = visual.ImageStim(win, image=path, interpolate=True)
+                data.append({'type': 'image', 'name': name.split('.')[0], 'stimulus': image})
             elif name[-3:] in possible_audio_format:
-                data.append(('sound', name.split('.')[0], path))
+                data.append({'type': 'sound', 'name': name.split('.')[0], 'stimulus': path})
             else:
                 raise Exception('Error while loading a file ' + name)
         except:
