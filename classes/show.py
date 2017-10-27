@@ -8,7 +8,8 @@ from classes.show_info import show_info, show_text
 # TODO: triggers
 def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, triggers_list, frame_time=1/60.):
     beh = []
-    mean_rt = 0
+    rt_sum = 0
+    rt_mean = 0
     fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Text_size'])
     clock = core.Clock()
 
@@ -20,7 +21,8 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
             continue
 
         if block['type'] == 'calibration':
-            mean_rt = 0
+            rt_mean = 0
+            rt_sum = 0
 
         for trial in block['trials']:
             reaction_time = None
@@ -75,7 +77,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
             # verify reaction
             if response and trial['type'] == 'go':
-                if not (block['type'] == 'experiment' and reaction_time > mean_rt - mean_rt * block['cutoff']):
+                if not (block['type'] == 'experiment' and reaction_time > rt_mean - rt_mean * block['cutoff']):
                     acc = 'positive'
             elif not response and trial['type'] != 'go':
                 acc = 'positive'
@@ -84,7 +86,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
             # calibration
             if block['type'] == 'calibration' and trial['type'] == 'go':
-                mean_rt += reaction_time
+                rt_sum += reaction_time
 
             # feedback
             if block['type'] == 'experiment':
@@ -95,14 +97,23 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                 if config[feedback_type + 'show']:
                     feedback_text = config[feedback_type + 'text']
                     feedback_text = visual.TextStim(win, color='black', text=feedback_text,
-                                                    height=2 * config['Text_size'])
+                                                    height=config['Text_size'])
                     feedback_show_time = random.uniform(config['Feedback_show_time'][0],
                                                         config['Feedback_show_time'][1])
                     show_text(win, feedback_text, feedback_show_time, part_id, beh, triggers_list)
 
-            # TODO: save beh
+            # save beh
+            beh.append({'block type': block['type'],
+                        'trial type': trial['type'],
+                        'cue name': trial['cue']['name'],
+                        'target name': trial['target']['name'],
+                        'response': response,
+                        'rt': reaction_time,
+                        'reaction': True if acc == 'positive' else False,
+                        'cal mean rt': rt_mean,
+                        'cutoff': block['cutoff'] if block['type'] == 'experiment' else None})
 
         if block['type'] == 'calibration':
-            mean_rt /= len([trial for trial in block['trials'] if trial['type'] == 'go'])
+            rt_mean = rt_sum / len([trial for trial in block['trials'] if trial['type'] == 'go'])
 
     return beh, triggers_list
