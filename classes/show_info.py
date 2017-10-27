@@ -1,7 +1,9 @@
 from psychopy import visual, event
+import time
 import os
 
 from classes.load_data import read_text_from_file
+from classes.check_exit import check_exit
 
 
 def show_info(win, file_name, text_size, screen_width, insert=''):
@@ -14,7 +16,7 @@ def show_info(win, file_name, text_size, screen_width, insert=''):
     :param insert: extra text for read_text_from_file
     :return:
     """
-    hello_msg = read_text_from_file(file_name, insert=insert)
+    hello_msg = read_text_from_file(os.path.join('messages', file_name), insert=insert)
     hello_msg = visual.TextStim(win=win, antialias=True, font=u'Arial',
                                 text=hello_msg, height=text_size,
                                 wrapWidth=screen_width, color=u'black',
@@ -27,31 +29,10 @@ def show_info(win, file_name, text_size, screen_width, insert=''):
     win.flip()
 
 
-def break_info(show_answers_correctness, show_response_time, show_stopped_ratio, show_keys_mapping, answers_correctness,
-               response_time, stopped_ratio, keys_mapping):
-    extra_info = ""
-    if show_answers_correctness:
-        file_name = os.path.join('messages', 'answers_correctness.txt')
-        extra_info += read_text_from_file(file_name=file_name, insert=answers_correctness) + '\n'
-    if show_response_time:
-        file_name = os.path.join('messages', 'response_time.txt')
-        extra_info += read_text_from_file(file_name=file_name, insert=response_time) + '\n'
-    if show_stopped_ratio:
-        file_name = os.path.join('messages', 'stopped_ratio.txt')
-        extra_info += read_text_from_file(file_name=file_name, insert=stopped_ratio) + '\n'
-    if show_keys_mapping:
-        extra_info += keys_mapping + '\n'
-
-    return extra_info
-
-
-def prepare_buttons_info(dict_to_show):
-    new_dict = dict()
-    for key in dict_to_show:
-        key_type = key.split('_')[0]
-        new_dict[key_type] = dict_to_show[key]
-
-    info_to_show = ''
-    for key in new_dict:
-        info_to_show += '{}: {}, '.format(key, new_dict[key])
-    return info_to_show[:-2]
+def show_text(win, text, show_time, part_id=None, beh=None, triggers_list=None):
+    text.setAutoDraw(True)
+    win.flip()
+    time.sleep(show_time)
+    text.setAutoDraw(False)
+    check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
+    win.flip()

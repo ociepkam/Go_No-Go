@@ -1,35 +1,35 @@
 from psychopy import visual, event, core
-import time
 import random
 
 from classes.check_exit import check_exit
-from classes.show_info import show_info
-
-
-def draw_fixation(win, fixation, config, part_id=None, beh=None, triggers_list=None):
-    fixation_show_time = random.uniform(config['Fixation_show_time'][0], config['Fixation_show_time'][1])
-    fixation.setAutoDraw(True)
-    win.flip()
-    time.sleep(fixation_show_time)
-    fixation.setAutoDraw(False)
-    check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
-    win.flip()
+from classes.show_info import show_info, show_text
 
 
 # TODO: triggers
 def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, triggers_list, frame_time=1/60.):
     beh = []
+    mean_rt = 0
     fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Text_size'])
     clock = core.Clock()
 
     for block in experiment:
+
         if block['type'] == 'break':
             show_info(win=win, file_name=block['file_name'], text_size=config['Text_size'],
                       screen_width=screen_res['width'])
             continue
 
+        if block['type'] == 'calibration':
+            mean_rt = 0
+
         for trial in block['trials']:
-            draw_fixation(win, fixation, config, part_id, beh, triggers_list)
+            reaction_time = None
+            response = None
+            acc = 'negative'
+
+            # draw fixation
+            fixation_show_time = random.uniform(config['Fixation_show_time'][0], config['Fixation_show_time'][1])
+            show_text(win, fixation, fixation_show_time, part_id, beh, triggers_list)
 
             # draw cue
             cue_show_time = random.uniform(config['Cue_show_time'][0], config['Cue_show_time'][1])
@@ -73,8 +73,36 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                 check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                 win.flip()
 
-            # draw feedback
-            # TODO: feedback
+            # verify reaction
+            if response and trial['type'] == 'go':
+                if not (block['type'] == 'experiment' and reaction_time > mean_rt - mean_rt * block['cutoff']):
+                    acc = 'positive'
+            elif not response and trial['type'] != 'go':
+                acc = 'positive'
+            elif trial['type'] == 'go':
+                reaction_time = target_show_time
+
+            # calibration
+            if block['type'] == 'calibration' and trial['type'] == 'go':
+                mean_rt += reaction_time
+
+            # feedback
+            if block['type'] == 'experiment':
+                # choose feedback type
+                feedback_type = 'Feedback_{}_{}_'.format(trial['type'], acc)
+
+                # draw feedback
+                if config[feedback_type + 'show']:
+                    feedback_text = config[feedback_type + 'text']
+                    feedback_text = visual.TextStim(win, color='black', text=feedback_text,
+                                                    height=2 * config['Text_size'])
+                    feedback_show_time = random.uniform(config['Feedback_show_time'][0],
+                                                        config['Feedback_show_time'][1])
+                    show_text(win, feedback_text, feedback_show_time, part_id, beh, triggers_list)
+
             # TODO: save beh
+
+        if block['type'] == 'calibration':
+            mean_rt /= len([trial for trial in block['trials'] if trial['type'] == 'go'])
 
     return beh, triggers_list

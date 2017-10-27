@@ -4,14 +4,14 @@
 import os
 
 # from classes.prepare_experiment import prepare_trials, create_stops_times_dict, randomize_buttons
-from classes.load_data import load_data, load_config, load_data_in_folders
+from classes.load_data import load_data, load_config
 from classes.screen import create_win
 from classes.experiment_info import experiment_info
 from classes.ophthalmic_procedure import ophthalmic_procedure
 from classes.show import show
 from classes.save_data import save_beh, save_triggers
-from classes.triggers import create_eeg_port, create_nirs_dev
-from classes.show_info import show_info, prepare_buttons_info
+from classes.triggers import create_eeg_port
+from classes.show_info import show_info
 from classes.prepare_experiment import prepare_experiment
 
 __author__ = 'ociepkam'
@@ -51,7 +51,7 @@ def run():
     # Instruction
     instructions = sorted([f for f in os.listdir('messages') if f.startswith('instruction')])
     for instruction in instructions:
-        show_info(win=win, file_name=os.path.join('messages', instruction), text_size=config['Text_size'],
+        show_info(win=win, file_name=instruction, text_size=config['Text_size'],
                   screen_width=screen_res['width'])
 
     # Experiment
@@ -62,9 +62,5 @@ def run():
     # Save data
     save_beh(data=beh, name=part_id)
     save_triggers(data=triggers_list, name=part_id)
-
-    # Experiment end
-    show_info(win=win, file_name=os.path.join('messages', 'end.txt'), text_size=config['Text_size'],
-              screen_width=screen_res['width'])
 
 run()

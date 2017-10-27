@@ -7,6 +7,7 @@ Send_EEG_trigg: False
 # view parameters
 Screen_color: Gainsboro
 Text_size: 40
+Figure_size: 80
 
 # times
 Fixation_show_time: [0.5, 0.5]
@@ -15,29 +16,38 @@ Target_show_time: [1, 1]
 Empty_screen_show_time: [1, 1]
 Feedback_show_time: [1, 1]
 
-# show feedback
-Feedback_go_show_positives: True
-Feedback_go_show_negatives: True
-Feedback_shape_show_positives: True
-Feedback_shape_show_negatives: True
-Feedback_color_show_positives: True
-Feedback_color_show_negatives: True
-
 # reaction keys
 Keys: [space]
 
 # experiment structure
 Experiment_blocks: [
     {type: training, number_of_go_trials: 5, number_of_shape_trials: 5, number_of_color_trials: 5},
+    {type: break, file_name: end_training.txt},
     {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
+    {type: break, file_name: end_calibration1.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
     {type: break, file_name: break1.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
     {type: break, file_name: break2.txt},
     {type: calibration, number_of_go_trials: 10, number_of_shape_trials: 2, number_of_color_trials: 2},
+    {type: break, file_name: end_calibration2.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
     {type: break, file_name: break3.txt},
-    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.2}]
+    {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.2},
+    {type: break, file_name: end.txt}]
+# show feedback
+Feedback_go_positive_show: True
+Feedback_go_negative_show: True
+Feedback_shape_positive_show: False
+Feedback_shape_negative_show: False
+Feedback_color_positive_show: False
+Feedback_color_negative_show: False
 
-
+# feedback text
+Feedback_go_positive_text: ŚWIETNIE!
+Feedback_go_negative_text: ZA WOLNO!
+Feedback_shape_positive_text: Feedback_shape_positives
+Feedback_shape_negative_text: Feedback_shape_negatives
+Feedback_color_positive_text: Feedback_color_positives
+Feedback_color_negative_text: Feedback_color_negatives
 
