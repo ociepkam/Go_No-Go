@@ -42,7 +42,7 @@ def load_data(win, folder_name, config, screen_res):
                                                color=u'black', alignHoriz='center', alignVert='center')
                         data.append({'type': 'text', 'name': trigger_name, 'stimulus': word})
             elif name[-3:] in possible_images_format:
-                image = visual.ImageStim(win, image=path, interpolate=True)
+                image = visual.ImageStim(win, image=path, interpolate=True, size=config['Figure_size'])
                 data.append({'type': 'image', 'name': name.split('.')[0], 'stimulus': image})
             elif name[-3:] in possible_audio_format:
                 data.append({'type': 'sound', 'name': name.split('.')[0], 'stimulus': path})
@@ -50,70 +50,6 @@ def load_data(win, folder_name, config, screen_res):
                 raise Exception('Error while loading a file ' + name)
         except:
             raise Exception('Error while loading a file ' + name)
-
-    return data
-
-
-def load_data_in_folders(win, folder_name, config, screen_res):
-    """
-    ladowanie tekstu, zdjec i dzwiekow
-    :param screen_res:
-    :param config:
-    :param win: visual.Window z psychopy
-    :param folder_name: nazwa folderu z ktorego beda ladowane pliki
-    """
-
-    folders = [f for f in os.listdir(folder_name)]
-    data = list()
-    for folder in folders:
-        p = os.path.join(folder_name, folder)
-        names = [f for f in os.listdir(p)]
-        for name in names:
-            path = os.path.join(folder_name, folder, name)
-            try:
-                if name[-3:] == 'txt':
-                    with open(path, 'r') as text_file:
-                        for line in text_file:
-                            trigger_name = line.split(':')[0]
-                            text = line.split(':')[1]
-                            text = text.split('\n')[0]
-                            word = visual.TextStim(win=win, antialias=True, font=u'Arial', text=text,
-                                                   height=config['Text_size'], wrapWidth=screen_res['width'],
-                                                   color=u'black', alignHoriz='center', alignVert='center')
-                            data.append(('text', folder + '_' + trigger_name, word))
-                elif name[-3:] in possible_images_format:
-                    image = visual.ImageStim(win, image=path, interpolate=True)
-                    data.append(('image', folder + '_' + name.split('.')[0], image))
-                elif name[-3:] in possible_audio_format:
-                    data.append(('sound', folder + '_' + name.split('.')[0], path))
-                else:
-                    raise Exception('Error while loading a file ' + name)
-            except:
-                raise Exception('Error while loading a file ' + name)
-    return data
-
-
-def load_data_names(folder_name):
-    folders = [f for f in os.listdir(folder_name)]
-    data = list()
-    for folder in folders:
-        p = os.path.join(folder_name, folder)
-        names = [f for f in os.listdir(p)]
-        for name in names:
-            path = os.path.join(folder_name, name)
-            try:
-                if name[-3:] == 'txt':
-                    with open(path, 'r') as text_file:
-                        for line in text_file:
-                            data.append(folder + '_' +line.split(':')[0])
-                elif name[-3:] in possible_images_format:
-                    data.append(folder + '_' +name.split('.')[0])
-                elif name[-3:] in possible_audio_format:
-                    data.append(folder + '_' +name.split('.')[0])
-                else:
-                    raise Exception('Error while loading a file ' + name)
-            except:
-                raise Exception('Error while loading a file ' + name)
 
     return data
 
