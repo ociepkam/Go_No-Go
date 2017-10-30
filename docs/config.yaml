@@ -1,8 +1,8 @@
 Observer: Patrycja
 
 # EEG
-Ophthalmic_procedure: False
-Send_EEG_trigg: False
+Ophthalmic_procedure: True
+Send_EEG_trigg: True
 
 # view parameters
 Screen_color: Gainsboro

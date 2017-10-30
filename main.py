@@ -39,7 +39,6 @@ def run():
 
     # prepare experiment
     experiment = prepare_experiment(config['Experiment_blocks'], stimulus)
-
     # Run experiment
     # Ophthalmic procedure
     if config['Ophthalmic_procedure']:

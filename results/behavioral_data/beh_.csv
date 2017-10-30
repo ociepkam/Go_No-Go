@@ -1,1 +1,17 @@
-Nr,GO_type,GO_name,RE_key,RE_true,RE_time,ST_type,ST_name,ST_wait_time
+block type,trial type,cue name,target name,response,rt,reaction,cal mean rt,cutoff
+calibration,shape,2_neutral,1_color_1,,,True,0,
+calibration,go,1_neutral,1_color_1,,1.0,False,0,
+calibration,go,2_neutral,2_color_1,,1.0,False,0,
+calibration,go,1_neutral,1_color_1,,1.0,False,0,
+calibration,go,1_neutral,1_color_1,,1.0,False,0,
+calibration,color,1_neutral,1_color_2,,,True,0,
+calibration,color,2_neutral,2_color_2,,,True,0,
+calibration,go,1_neutral,1_color_1,,1.0,False,0,
+calibration,shape,1_neutral,2_color_1,,,True,0,
+calibration,go,2_neutral,2_color_1,,1.0,False,0,
+calibration,go,2_neutral,2_color_1,,1.0,False,0,
+calibration,go,1_neutral,1_color_1,,1.0,False,0,
+calibration,go,2_neutral,2_color_1,,1.0,False,0,
+calibration,go,2_neutral,2_color_1,,1.0,False,0,
+experiment,go,2_neutral,2_color_1,,1.0,False,1.0,0.1
+experiment,go,1_neutral,1_color_1,space,0.3669559955596924,True,1.0,0.1

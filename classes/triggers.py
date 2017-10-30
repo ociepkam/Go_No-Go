@@ -4,9 +4,10 @@ import time
 # TODO: write and test triggers
 class TriggerTypes(object):
     BLINK = 'BLINK'
-    GO = 'GO'
-    ST = 'ST'
+    CUE = 'CUE'
+    TARGET = 'TARGET'
     RE = 'RE'
+    FEEDB = 'FEEDB'
 
 
 def create_eeg_port():
@@ -29,12 +30,8 @@ def create_nirs_dev():
         raise Exception("Can't connect to NIRS")
 
 
-def prepare_trigger_name(trial, stop_show_start=None):
-    name = "*{}*{}".format(trial['arrow'][0], trial['arrow'][1])
-    if trial['stop'] is not None:
-        name += '*{}*{}*{}'.format(trial['stop'][0], trial['stop'][1], stop_show_start)
-    else:
-        name += '*-*-*-'
+def prepare_trigger_name(trial, block_type):
+    name = "*{}*{}*{}".format(block_type, trial['cue']['name'], trial['target']['name'])
     # for response
     name += '*-'
     return name

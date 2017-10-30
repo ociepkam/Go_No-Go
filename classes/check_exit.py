@@ -2,7 +2,7 @@ from psychopy import event, logging
 from classes.save_data import save_beh, save_triggers
 
 
-def check_exit(key='f7', part_id=None, beh=None, triggers_list=None):
+def check_exit(key='f7', part_id='', beh=None, triggers_list=None):
     stop = event.getKeys(keyList=[key])
     if len(stop) > 0:
         save_beh(beh, part_id)

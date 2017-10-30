@@ -1,8 +1,10 @@
 from psychopy import visual, event, core
 import random
+import time
 
 from classes.check_exit import check_exit
 from classes.show_info import show_info, show_text
+from classes.triggers import prepare_trigger, TriggerTypes, prepare_trigger_name, send_trigger
 
 
 # TODO: triggers
@@ -25,6 +27,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
             rt_sum = 0
 
         for trial in block['trials']:
+            trigger_name = prepare_trigger_name(trial=trial, block_type=block['type'])
             reaction_time = None
             response = None
             acc = 'negative'
@@ -34,12 +37,16 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
             show_text(win, fixation, fixation_show_time, part_id, beh, triggers_list)
 
             # draw cue
+            trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.CUE, trigger_no=trigger_no,
+                                                        triggers_list=triggers_list, trigger_name=trigger_name)
             cue_show_time = random.uniform(config['Cue_show_time'][0], config['Cue_show_time'][1])
             trial['cue']['stimulus'].setAutoDraw(True)
             win.callOnFlip(clock.reset)
             event.clearEvents()
             win.flip()
-            # ------ trigger ------
+
+            send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
+
             while clock.getTime() < cue_show_time - frame_time:
                 check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                 win.flip()
@@ -48,17 +55,23 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
             win.flip()
 
             # draw target
+            trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.TARGET, trigger_no=trigger_no,
+                                                        triggers_list=triggers_list, trigger_name=trigger_name)
             target_show_time = random.uniform(config['Target_show_time'][0], config['Target_show_time'][1])
             trial['target']['stimulus'].setAutoDraw(True)
             win.callOnFlip(clock.reset)
             event.clearEvents()
             win.flip()
-            # ------ trigger ------
+
+            send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
+
             while clock.getTime() < target_show_time - frame_time:
                 key = event.getKeys(keyList=config['Keys'])
                 if key:
                     reaction_time = clock.getTime()
-                    # ------ trigger ------
+                    trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.RE, trigger_no=trigger_no,
+                                                                triggers_list=triggers_list, trigger_name=trigger_name)
+                    send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
                     response = key[0]
                     break
 
@@ -100,7 +113,16 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                                                     height=config['Text_size'])
                     feedback_show_time = random.uniform(config['Feedback_show_time'][0],
                                                         config['Feedback_show_time'][1])
-                    show_text(win, feedback_text, feedback_show_time, part_id, beh, triggers_list)
+
+                    trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.FEEDB, trigger_no=trigger_no,
+                                                                triggers_list=triggers_list, trigger_name=trigger_name)
+                    feedback_text.setAutoDraw(True)
+                    win.flip()
+                    send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
+                    time.sleep(feedback_show_time-frame_time)
+                    feedback_text.setAutoDraw(False)
+                    check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
+                    win.flip()
 
             # save beh
             beh.append({'block type': block['type'],

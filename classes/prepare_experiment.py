@@ -1,4 +1,5 @@
 import random
+from copy import deepcopy, copy
 
 
 def prepare_trials_type(stimulus_pairs, number_of_trials):
@@ -27,24 +28,28 @@ def prepare_trials(block, stimulus):
     all_trials = []
 
     if 'number_of_shape_trials' in block:
+
         stimulus_pairs = prepare_stimulus_pairs(cue_name='neutral', target_name='color_1',
                                                 stim_name='shape', stimulus=stimulus)
+
         for idx in range(len(stimulus_pairs)):
             target_name = stimulus_pairs[idx]['target']['name']
             new_target_idx = (int(target_name.split('_')[0]) % len(stimulus_pairs)) + 1
-            stimulus_pairs[idx]['target']['name'] = '{}_{}'.format(new_target_idx, target_name.split("_", 1)[1])
+            new_target_name = '{}_{}'.format(new_target_idx, target_name.split("_", 1)[1])
+            stimulus_pairs[idx]['target'] = [stim for stim in stimulus if stim['name'] == new_target_name][0]
+
         trials = prepare_trials_type(stimulus_pairs=stimulus_pairs, number_of_trials=block['number_of_shape_trials'])
         all_trials += trials
 
     if 'number_of_go_trials' in block:
         stimulus_pairs = prepare_stimulus_pairs(cue_name='neutral', target_name='color_1',
-                                                stim_name='go', stimulus=stimulus)
+                                                stim_name='go', stimulus=copy(stimulus))
         trials = prepare_trials_type(stimulus_pairs=stimulus_pairs, number_of_trials=block['number_of_go_trials'])
         all_trials += trials
 
     if 'number_of_color_trials' in block:
         stimulus_pairs = prepare_stimulus_pairs(cue_name='neutral', target_name='color_2',
-                                                stim_name='color', stimulus=stimulus)
+                                                stim_name='color', stimulus=copy(stimulus))
         trials = prepare_trials_type(stimulus_pairs=stimulus_pairs, number_of_trials=block['number_of_color_trials'])
         all_trials += trials
 
@@ -53,6 +58,7 @@ def prepare_trials(block, stimulus):
 
 
 def prepare_experiment(experiment_blocks, stimulus):
+
     experiment = []
     for block in experiment_blocks:
         if block['type'] == 'break':
