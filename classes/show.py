@@ -7,7 +7,6 @@ from classes.show_info import show_info, show_text
 from classes.triggers import prepare_trigger, TriggerTypes, prepare_trigger_name, send_trigger
 
 
-# TODO: triggers
 def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, triggers_list, frame_time=1/60.):
     beh = []
     rt_sum = 0
@@ -47,10 +46,10 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
             send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
 
-            while clock.getTime() < cue_show_time - frame_time:
+            while clock.getTime() < cue_show_time:
                 check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                 win.flip()
-            # print cue_show_time-clock.getTime()
+            # print (cue_show_time - clock.getTime())*1000
             trial['cue']['stimulus'].setAutoDraw(False)
             win.flip()
 
@@ -65,7 +64,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
             send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
 
-            while clock.getTime() < target_show_time - frame_time:
+            while clock.getTime() < target_show_time:
                 key = event.getKeys(keyList=config['Keys'])
                 if key:
                     reaction_time = clock.getTime()
@@ -77,7 +76,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
                 check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                 win.flip()
-            # print target_show_time-clock.getTime()
+            # print (target_show_time-clock.getTime())*1000
             trial['target']['stimulus'].setAutoDraw(False)
             win.flip()
 
@@ -87,6 +86,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
             while clock.getTime() < empty_screen_show_time:
                 check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                 win.flip()
+            # print (empty_screen_show_time-clock.getTime())*1000
 
             # verify reaction
             if response and trial['type'] == 'go':

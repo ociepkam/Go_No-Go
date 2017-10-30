@@ -1,7 +1,7 @@
 Observer: Patrycja
 
 # EEG
-Ophthalmic_procedure: True
+Ophthalmic_procedure: False
 Send_EEG_trigg: True
 
 # view parameters

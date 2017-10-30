@@ -1,5 +1,4 @@
 import random
-from copy import deepcopy, copy
 
 
 def prepare_trials_type(stimulus_pairs, number_of_trials):
@@ -43,13 +42,13 @@ def prepare_trials(block, stimulus):
 
     if 'number_of_go_trials' in block:
         stimulus_pairs = prepare_stimulus_pairs(cue_name='neutral', target_name='color_1',
-                                                stim_name='go', stimulus=copy(stimulus))
+                                                stim_name='go', stimulus=stimulus)
         trials = prepare_trials_type(stimulus_pairs=stimulus_pairs, number_of_trials=block['number_of_go_trials'])
         all_trials += trials
 
     if 'number_of_color_trials' in block:
         stimulus_pairs = prepare_stimulus_pairs(cue_name='neutral', target_name='color_2',
-                                                stim_name='color', stimulus=copy(stimulus))
+                                                stim_name='color', stimulus=stimulus)
         trials = prepare_trials_type(stimulus_pairs=stimulus_pairs, number_of_trials=block['number_of_color_trials'])
         all_trials += trials
 

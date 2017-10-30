@@ -1,7 +1,6 @@
 import time
 
 
-# TODO: write and test triggers
 class TriggerTypes(object):
     BLINK = 'BLINK'
     CUE = 'CUE'
