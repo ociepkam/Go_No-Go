@@ -56,10 +56,11 @@ def run():
     # Experiment
     beh, triggers_list = show(win=win, screen_res=screen_res, experiment=experiment, config=config, part_id=part_id,
                               port_eeg=port_eeg, trigger_no=trigger_no, triggers_list=triggers_list,
-                              frame_time=1./frames_per_sec)
+                              frame_time=1. / frames_per_sec)
 
     # Save data
     save_beh(data=beh, name=part_id)
     save_triggers(data=triggers_list, name=part_id)
+
 
 run()

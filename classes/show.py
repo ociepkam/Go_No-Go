@@ -94,10 +94,12 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                     acc = 'positive'
             elif not response and trial['type'] != 'go':
                 acc = 'positive'
+            # TODO: remove next two lines
             elif trial['type'] == 'go':
                 reaction_time = target_show_time
 
             # calibration
+            # TODO: verify reaction_time != None
             if block['type'] == 'calibration' and trial['type'] == 'go':
                 rt_sum += reaction_time
 
