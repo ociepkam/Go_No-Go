@@ -6,7 +6,8 @@ class TriggerTypes(object):
     CUE = 'CUE'
     TARGET = 'TARGET'
     RE = 'RE'
-    FEEDB = 'FEEDB'
+    FEEDB_GOOD = 'FEEDB_GOOD'
+    FEEDB_BAD = 'FEEDB_BAD'
 
 
 def create_eeg_port():

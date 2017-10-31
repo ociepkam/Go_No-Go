@@ -115,8 +115,12 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                                                     height=config['Text_size'])
                     feedback_show_time = random.uniform(config['Feedback_show_time'][0],
                                                         config['Feedback_show_time'][1])
+                    if acc == 'positive':
+                        trigger_type = TriggerTypes.FEEDB_GOOD
+                    else:
+                        trigger_type = TriggerTypes.FEEDB_BAD
 
-                    trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.FEEDB, trigger_no=trigger_no,
+                    trigger_no, triggers_list = prepare_trigger(trigger_type=trigger_type, trigger_no=trigger_no,
                                                                 triggers_list=triggers_list, trigger_name=trigger_name)
                     feedback_text.setAutoDraw(True)
                     win.flip()
