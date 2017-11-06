@@ -7,11 +7,11 @@ from classes.show_info import show_info, show_text
 from classes.triggers import prepare_trigger, TriggerTypes, prepare_trigger_name, send_trigger
 
 
-def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, triggers_list, frame_time=1/60.):
+def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, triggers_list, frame_time=1 / 60.):
     beh = []
     rt_sum = 0
     rt_mean = 0
-    fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Text_size'])
+    fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Text_size'], pos=(0, 10))
     clock = core.Clock()
 
     for block in experiment:
@@ -69,7 +69,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                 if key:
                     reaction_time = clock.getTime()
                     trigger_no, triggers_list = prepare_trigger(trigger_type=TriggerTypes.RE, trigger_no=trigger_no,
-                                                                triggers_list=triggers_list, trigger_name=trigger_name)
+                                                                triggers_list=triggers_list, trigger_name=trigger_name[:-1]+key[0])
                     send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
                     response = key[0]
                     break
@@ -94,13 +94,9 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                     acc = 'positive'
             elif not response and trial['type'] != 'go':
                 acc = 'positive'
-            # TODO: remove next two lines
-            elif trial['type'] == 'go':
-                reaction_time = target_show_time
 
             # calibration
-            # TODO: verify reaction_time != None
-            if block['type'] == 'calibration' and trial['type'] == 'go':
+            if block['type'] == 'calibration' and trial['type'] == 'go' and reaction_time is not None:
                 rt_sum += reaction_time
 
             # feedback
@@ -125,7 +121,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                     feedback_text.setAutoDraw(True)
                     win.flip()
                     send_trigger(port_eeg=port_eeg, trigger_no=trigger_no, send_eeg_triggers=config['Send_EEG_trigg'])
-                    time.sleep(feedback_show_time-frame_time)
+                    time.sleep(feedback_show_time - frame_time)
                     feedback_text.setAutoDraw(False)
                     check_exit(part_id=part_id, beh=beh, triggers_list=triggers_list)
                     win.flip()

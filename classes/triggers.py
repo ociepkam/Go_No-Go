@@ -3,11 +3,11 @@ import time
 
 class TriggerTypes(object):
     BLINK = 'BLINK'
-    CUE = 'CUE'
-    TARGET = 'TARGET'
+    CUE = 'CU'
+    TARGET = 'TG'
     RE = 'RE'
-    FEEDB_GOOD = 'FEEDB_GOOD'
-    FEEDB_BAD = 'FEEDB_BAD'
+    FEEDB_GOOD = 'FG'
+    FEEDB_BAD = 'FB'
 
 
 def create_eeg_port():
@@ -31,7 +31,9 @@ def create_nirs_dev():
 
 
 def prepare_trigger_name(trial, block_type):
-    name = "*{}*{}*{}".format(block_type, trial['cue']['name'], trial['target']['name'])
+    cue_name = trial['cue']['name'][:3]
+    target_name = trial['target']['name'][:3] + trial['target']['name'][-2:]
+    name = "*{}*{}*{}".format(block_type[:2], cue_name, target_name)
     # for response
     name += '*-'
     return name
