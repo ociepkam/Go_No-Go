@@ -6,8 +6,10 @@ Send_EEG_trigg: True
 
 # view parameters
 Screen_color: 000000
-Text_size: 30
+Text_size: 40
+Feedback_size: 45
 Figure_size: 80
+Fix_size: 30
 
 # times
 Fixation_show_time: [0.5, 0.5]
@@ -21,9 +23,11 @@ Keys: [space]
 
 # experiment structure
 Experiment_blocks: [
-    {type: training, number_of_go_trials: 10, number_of_shape_trials: 10, number_of_color_trials: 10},
-    {type: break, file_name: end_training.txt},
-    {type: calibration, number_of_go_trials: 20, number_of_shape_trials: 4, number_of_color_trials: 4},
+    #{type: training, number_of_go_trials: 10, number_of_shape_trials: 0, number_of_color_trials: 0},
+    #{type: break, file_name: end_training.txt},
+    #{type: training, number_of_go_trials: 10, number_of_shape_trials: 6, number_of_color_trials: 6},
+    #{type: break, file_name: end_training.txt},
+    {type: calibration, number_of_go_trials: 2, number_of_shape_trials: 0, number_of_color_trials: 0},
     {type: break, file_name: end_calibration1.txt},
     {type: experiment, number_of_go_trials: 56, number_of_shape_trials: 14, number_of_color_trials: 14, cutoff: 0.1},
     {type: break, file_name: break1.txt},

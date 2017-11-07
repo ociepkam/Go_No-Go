@@ -11,7 +11,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
     beh = []
     rt_sum = 0
     rt_mean = 0
-    fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Text_size'], pos=(0, 10))
+    fixation = visual.TextStim(win, color='black', text='+', height=2 * config['Fix_size'], pos=(0, 10))
     clock = core.Clock()
 
     for block in experiment:
@@ -108,7 +108,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
                 if config[feedback_type + 'show']:
                     feedback_text = config[feedback_type + 'text']
                     feedback_text = visual.TextStim(win, color='black', text=feedback_text,
-                                                    height=config['Text_size'])
+                                                    height=config['Feedback_size'])
                     feedback_show_time = random.uniform(config['Feedback_show_time'][0],
                                                         config['Feedback_show_time'][1])
                     if acc == 'positive':

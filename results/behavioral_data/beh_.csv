@@ -1,3 +1,10 @@
 block type,trial type,cue name,target name,response,rt,reaction,cal mean rt,cutoff
-training,shape,1_neutral,2_color_1,,,True,0,
-training,go,2_neutral,2_color_1,,,False,0,
+calibration,go,1_neutral,1_color_1,,,False,0,
+calibration,go,2_neutral,2_color_1,,,False,0,
+experiment,go,2_neutral,2_color_1,,,False,0,0.1
+experiment,go,1_neutral,1_color_1,,,False,0,0.1
+experiment,go,2_neutral,2_color_1,space,0.366894006729126,False,0,0.1
+experiment,shape,1_neutral,2_color_1,,,True,0,0.1
+experiment,go,1_neutral,1_color_1,,,False,0,0.1
+experiment,go,1_neutral,1_color_1,,,False,0,0.1
+experiment,go,2_neutral,2_color_1,,,False,0,0.1
