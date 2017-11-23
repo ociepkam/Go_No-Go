@@ -1,2 +1,3 @@
-2
-<--insert-->
+Przerwa nr 2
+Za chwilę rozpocznie się sesja eksperymentalna nr 2 z feedbackiem.
+Naciśnij spację, żeby uruchomić badanie.
