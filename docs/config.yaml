@@ -7,7 +7,7 @@ Send_EEG_trigg: True
 # view parameters
 Screen_color: 000000
 Text_size: 40
-Feedback_size: 45
+Feedback_size: 130
 Figure_size: 80
 Fix_size: 30
 
@@ -19,7 +19,7 @@ Empty_screen_show_time: [1, 1]
 Feedback_show_time: [1, 1]
 
 # reaction keys
-Keys: [space]
+Keys: [num_separator]
 
 # experiment structure
 Experiment_blocks: [
@@ -49,12 +49,8 @@ Feedback_color_positive_show: False
 Feedback_color_negative_show: False
 
 # feedback text
-Feedback_go_positive_text: |
-  ŚWIETNIE!
-         ☺
-Feedback_go_negative_text: |
-  ZA WOLNO!
-         ☹
+Feedback_go_positive_text: ☺
+Feedback_go_negative_text: ☹
 Feedback_shape_positive_text: Feedback_shape_positives
 Feedback_shape_negative_text: Feedback_shape_negatives
 Feedback_color_positive_text: Feedback_color_positives

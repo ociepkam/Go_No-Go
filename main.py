@@ -50,8 +50,8 @@ def run():
     # Instruction
     instructions = sorted([f for f in os.listdir('messages') if f.startswith('instruction')])
     for instruction in instructions:
-        show_info(win=win, file_name=instruction, text_size=config['Text_size'],
-                  screen_width=screen_res['width'])
+        show_info(win=win, file_name=instruction, text_size=config['Text_size'], screen_width=screen_res['width'],
+                  part_id=part_id, beh=[], triggers_list=triggers_list)
 
     # Experiment
     beh, triggers_list = show(win=win, screen_res=screen_res, experiment=experiment, config=config, part_id=part_id,

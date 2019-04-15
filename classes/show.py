@@ -18,7 +18,7 @@ def show(win, screen_res, experiment, config, part_id, port_eeg, trigger_no, tri
 
         if block['type'] == 'break':
             show_info(win=win, file_name=block['file_name'], text_size=config['Text_size'],
-                      screen_width=screen_res['width'])
+                      screen_width=screen_res['width'], part_id=part_id, beh=beh, triggers_list=triggers_list)
             continue
 
         if block['type'] == 'calibration':
